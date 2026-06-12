@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mansi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+        .page {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: fadeIn 1.5s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        /* Floating Hearts Effect */
+        .heart-bg { position: absolute; color: red; font-size: 20px; animation: floatUp 6s linear infinite; z-index: -1; opacity: 0.6; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0.5); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+        
+        /* Typography & Elements */
+        h1, h2 { color: #ff4d4d; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+        p { font-size: 1.2rem; line-height: 1.6; max-width: 600px; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+        
+        /* Tap Heart Button */
+        .tap-heart-container { position: relative; margin-top: 40px; cursor: pointer; animation: pulse 1s infinite; z-index: 10; }
+        .tap-heart { color: red; font-size: 80px; text-shadow: 0 0 20px red; }
+        .tap-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 16px; font-weight: bold; pointer-events: none; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        
+        /* Timer & Unlock */
+        #timer { font-size: 2.5rem; font-weight: bold; color: #ffcc00; margin: 20px 0; }
+        .unlock-btn { padding: 15px 30px; background: red; color: white; border: none; border-radius: 25px; font-size: 1.2rem; cursor: pointer; display: none; box-shadow: 0 0 15px red; }
+        
+        /* Photo Styling */
+        .photo-img { width: 85%; max-width: 350px; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 77, 77, 0.6); margin-bottom: 20px; border: 2px solid #ff4d4d; }
+        .romantic-line { font-style: italic; font-size: 1.3rem; color: #ffb3b3; }
+        .tap-anywhere { font-size: 0.9rem; color: gray; margin-top: 20px; animation: blink 2s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+    <div id="hearts-container"></div>
+    <!-- Lock Screen -->
+    <div id="lockScreen" class="page active">
+        <h2>Special Surprise for Mansi ❤️</h2>
+        <p>This surprise will unlock on 27th July 2026</p>
+        <div id="timer">Loading...</div>
+        <button id="unlockBtn" class="unlock-btn" onclick="startSurprise()">Unlock Mansi's Surprise</button>
+    </div>
+
+    <!-- Page 1: Birthday Message & Tap Heart -->
+    <div id="page1" class="page">
+        <h1 style="margin-bottom: 20px;">Happy Birthday, Mansi! 🎉</h1>
+        <p id="typewriterText" style="min-height: 150px; text-align: left;"></p>
+        <div class="tap-heart-container" onclick="nextPage('page1', 'page2')">
+            <div class="tap-heart">❤️</div>
+            <div class="tap-text">Tap</div>
+        </div>
+    </div>
+
+    <!-- Page 2: Why You Are Special -->
+    <div id="page2" class="page" onclick="nextPage('page2', 'page3')">
+        <h2>Why You Are Special ✨</h2>
+        <p>You are not just a person in my life; you are the magic that makes everything better. The way you care for others, the warmth in your soul, and the purity of your heart make you uniquely beautiful. You bring light into every dark room and peace into my chaotic world. There is no one else like you, Mansi.</p>
+        <p class="tap-anywhere">(Tap anywhere to continue)</p>
+    </div>
+
+    <!-- Page 3: Praise -->
+    <div id="page3" class="page" onclick="nextPage('page3', 'page4')">
+        <h2>Everything I Love About You 💖</h2>
+        <p>Your smile... it's the most beautiful sight I've ever seen. It instantly melts my worries away. Your kindness knows no bounds; you always put others first. I adore your gentle behavior, your cute little habits, and the way your eyes sparkle when you're happy. Every single detail about you is absolutely perfect.</p>
+        <p class="tap-anywhere">(Tap anywhere to continue)</p>
+    </div>
+    <!-- Photos Page 4 to 13 -->
+    <div id="page4" class="page" onclick="nextPage('page4', 'page5')">
+        <img src="photo1.jpg" class="photo-img" alt="Mansi 1">
+        <p class="romantic-line">"In your eyes, I found the home my heart was always searching for."</p>
+    </div>
+    <div id="page5" class="page" onclick="nextPage('page5', 'page6')">
+        <img src="photo2.jpg" class="photo-img" alt="Mansi 2">
+        <p class="romantic-line">"Every moment spent with you is a beautiful treasure."</p>
+    </div>
+    <div id="page6" class="page" onclick="nextPage('page6', 'page7')">
+        <img src="photo3.jpg" class="photo-img" alt="Mansi 3">
+        <p class="romantic-line">"You are the magic that makes my ordinary days extraordinary."</p>
+    </div>
+    <div id="page7" class="page" onclick="nextPage('page7', 'page8')">
+        <img src="photo4.jpg" class="photo-img" alt="Mansi 4">
+        <p class="romantic-line">"Holding your hand is the only comfort I ever need."</p>
+    </div>
+    <div id="page8" class="page" onclick="nextPage('page8', 'page9')">
+        <img src="photo5.jpg" class="photo-img" alt="Mansi 5">
+        <p class="romantic-line">"Your smile is my favorite reason to wake up every morning."</p>
+    </div>
+    <div id="page9" class="page" onclick="nextPage('page9', 'page10')">
+        <img src="photo6.jpg" class="photo-img" alt="Mansi 6">
+        <p class="romantic-line">"I fall for you a little more every single time I look at you."</p>
+    </div>
+    <div id="page10" class="page" onclick="nextPage('page10', 'page11')">
+        <img src="photo7.jpg" class="photo-img" alt="Mansi 7">
+        <p class="romantic-line">"With you, the world is brighter, happier, and full of love."</p>
+    </div>
+    <div id="page11" class="page" onclick="nextPage('page11', 'page12')">
+        <img src="photo8.jpg" class="photo-img" alt="Mansi 8">
+        <p class="romantic-line">"You are my today, my tomorrow, and my forever."</p>
+    </div>
+    <div id="page12" class="page" onclick="nextPage('page12', 'page13')">
+        <img src="photo9.jpg" class="photo-img" alt="Mansi 9">
+        <p class="romantic-line">"Life is a beautiful journey because I have you by my side."</p>
+    </div>
+    <div id="page13" class="page" onclick="nextPage('page13', 'page14')">
+        <img src="photo10.jpg" class="photo-img" alt="Mansi 10">
+        <p class="romantic-line">"I love you, not just for who you are, but for who I am with you."</p>
+    </div>
+    <!-- Page 14: Saputara Trip -->
+    <div id="page14" class="page" onclick="nextPage('page14', 'page15')">
+        <h2>Our Saputara Memories ⛰️☁️</h2>
+        <p>I still get lost thinking about our special trip to Saputara. The misty mountains, the cool gentle breeze, and having you right beside me... those moments are etched in my heart forever. It was a perfect escape, made entirely magical just because you were there. I can't wait to make countless more memories like that with you.</p>
+        <p class="tap-anywhere">(Tap for the final surprise)</p>
+    </div>
+
+    <!-- Page 15: Final Page -->
+    <div id="page15" class="page">
+        <h2>Just For You... 🌹</h2>
+        <p style="font-style: italic; color: #ffcccc; font-size: 1.4rem;">
+            "Tari muskan mari duniya chhe,<br>
+            Taro sath maro shwas chhe.<br>
+            Jivan bhar aam j hasti rahe,<br>
+            Mansi, tu maro sab thi khas ehsas chhe."
+        </p>
+        <p>I wanted to make this day as special as you are to me. Wishing you the happiest birthday, Mansi. Keep shining, keep smiling, and always remember how deeply you are loved.</p>
+        <h3 style="margin-top: 30px;">With all my love ❤️</h3>
+    </div>
+
+    <script>
+        // 1. Floating Hearts Background Animation
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4 to 7 seconds
+            document.getElementById('hearts-container').appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 7000);
+        }
+        setInterval(createHeart, 500);
+
+        // 2. Countdown Timer Logic
+        const targetDate = new Date("July 27, 2026 00:00:00").getTime();
+        
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("timer").style.display = "none";
+                document.getElementById("unlockBtn").style.display = "inline-block";
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            }
+        }, 1000);
+
+        // 3. Unlock Surprise & Play Music
+        function startSurprise() {
+            // Play background music
+            const music = document.getElementById("bgMusic");
+            music.play().catch(e => console.log("Audio play failed", e));
+            
+            // Switch Page
+            nextPage('lockScreen', 'page1');
+            
+            // Start Typewriter effect
+            setTimeout(typeWriter, 1000);
+        }
+
+        // 4. Page Transition Logic
+        function nextPage(currentId, nextId) {
+            document.getElementById(currentId).classList.remove('active');
+            document.getElementById(nextId).classList.add('active');
+        }
+
+        // 5. Typewriter Effect Logic
+        const message = "On this very special day, I wanted to tell you how much you mean to me. Take your time, enjoy the music, and tap the heart below when you are ready to see your surprise...";
+        let i = 0;
+        function typeWriter() {
+            if (i < message.length) {
+                document.getElementById("typewriterText").innerHTML += message.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Speed of typing
+            }
+        }
+    </script>
+</body>
+</html>
